@@ -8,7 +8,7 @@ n=150
 array=np.zeros(n*6)
 #x=range(n, n*6+1)
 x=range(1, n*6+1)
-amount_of_tries=100000
+amount_of_tries=100000000
 for j in range(amount_of_tries):
     a=0
     print(str((j/amount_of_tries)*100)+" % Done")
@@ -32,7 +32,8 @@ print(x)
 print(len(x))
 print(array)
 print(len(array))
-plt.bar(x,array/amount_of_tries, align='center',alpha=0.5)
+plt.bar(x,array/amount_of_tries, align='center',alpha=0.5, width=1)
+
 #plt.xticks(x,axis)
 plt.xlim(n,n*6+1)
 plt.show()

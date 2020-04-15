@@ -7,14 +7,10 @@ from operator import itemgetter
 This is a simulation of a six wheel rover diluted to a 2D model with inaccurate values.
 
 """
-__author__="David Canosa Ybarra" \
-           "Student Number: 4839277" \
-           "Email: dcanosaybarra@gmail.com"
+__author__="David Canosa Ybarra"
 start_time = time.time()
 cg_height=0.5
 angles=np.linspace(np.pi/3,(np.pi*7/9),17)
-small_bump_size=0.05
-big_bump_size=0.5
 F_on_wheels_max=[]
 for alpha_1 in angles:
     for alpha_2 in angles:
@@ -28,7 +24,7 @@ for alpha_1 in angles:
             return x
 
         L_1=cg_height/np.cos(alpha_1/2)
-        lengths_L_3=np.linspace(0.3, L_1-0.3, 3)
+        lengths_L_3=np.linspace(0.1, L_1-0.1, 3)
         for L_3 in lengths_L_3:
             L_2=L_1-L_3
             k=170*10**3
@@ -109,19 +105,15 @@ for alpha_1 in angles:
                 x_dot_dot.append(np.array(X_dot_dot)[0][0])
                 count=count+1
                 t=t+dt
-            F_on_wheels_max.append([max([max((np.array(F_on_wheels_1)**2)**0.5), max((np.array(F_on_wheels_2)**2)**0.5), max((np.array(F_on_wheels_3)**2)**0.5)]), str(alpha_1/np.pi)+" Pi", str(alpha_2/np.pi)+" Pi", L_1, L_2, L_3])
-
-
-
+            F_on_wheels_max.append([max(F_on_wheels_1)+max(F_on_wheels_2)+max(F_on_wheels_3), str(alpha_1/np.pi)+" Pi", str(alpha_2/np.pi)+" Pi"])
+        #plt.plot(t_lst, F_on_wheels_1, label="Force on wheel 1")
+        #plt.plot(t_lst, F_on_wheels_2, label="Force on wheel 2")
+        #plt.plot(t_lst, F_on_wheels_3, label="Force on wheel 3")
     print("ONE SET OF ALPHA_2 DONE "+str((time.time() - start_time)))
 Final=sorted(F_on_wheels_max, key = itemgetter(0))
-print("Maximum compressive force: "+str(Final[0][0])+"\n"+
-      "Angle on the bigger joint: "+str(Final[0][1])+"\n"+
-      "Angle on the secondary joint: "+str(Final[0][2])+"\n"+
-      "Length of arm 1: "+str(Final[0][3])+"\n"+
-      "Length of arm 2: "+str(Final[0][4])+"\n"+
-      "Length of arm 3: "+str(Final[0][5]))
-
-
-
-
+print(Final[0])
+#plt.plot("Forces on wheels on the rover")
+#plt.legend()
+#plt.xlabel("Time [s]")
+#plt.ylabel("Force [N]")
+#plt.show()
